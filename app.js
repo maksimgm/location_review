@@ -1,17 +1,20 @@
-var express = require("express"),
+var express = require("express");
   app = express(),
   bodyParser = require("body-parser"),
   methodOverride = require('method-override'),
   morgan = require('morgan'),
+  MapboxClient = require('mapbox'),
   db = require("./models"),
-  session = require("cookie-session");
-  
+  session = require("cookie-session"),
+  loginMiddleware = require("./middleware/loginHelper"),
+  routeMiddleware = require("./middleware/routeHelper");
 
 app.set("view engine", "ejs");
 app.use(express.static(__dirname+"/public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
-app.use(morgan('tiny'));
+app.use(morgan('dev'));
+app.use(loginMiddleware);
 
 app.use(session({
   maxAge: 3600000,
@@ -19,13 +22,13 @@ app.use(session({
   name: "snickerdoddle"
 }));
 
-app.use(loginMiddleware);
+  
+// var url = "https://api.mapbox.com/v4/geocode/mapbox.places/";
+apiKey = "pk.eyJ1IjoibWFrc2ltbWFtcmlrb3YiLCJhIjoiY2lmMjE1ZTJ1MTFubHNxbTNlZjF5MTJrNyJ9.4SroRHM54MMtWp1NmrMbLA";
+var client = new MapboxClient(apiKey);
+// // **********User*************
 
-var url = "https://api.mapbox.com/v4/geocode/mapbox.places/";
-apiKey = "ILL NEVER TELL";
-
-// **********User*************
-app.get('/users/index', routeMiddleware.preventLoginSignup, function(req,res){
+app.get('/  ', routeMiddleware.preventLoginSignup, function(req,res){
   res.render('users/index');
 });
 
@@ -67,7 +70,12 @@ app.get("/logout", function (req, res) {
   req.logout();
   res.redirect("/");
 });
+app.post("/location/:location",function(req,res){
+  client.places(req.params, function(err, res) {
+  console.log(req)
+  console.log(res);
 
+});
 
 
 // **********Post*************
@@ -75,7 +83,17 @@ app.get("/logout", function (req, res) {
 app.get("/posts",function(req,res){
 
 });
+client.places("San Jose,CA", function(err, res) {
+  console.log(req);
+  console.log(res);
+});
+app.post("/location/San Jose, CA",function(req,res){
+  client.places(req.params, function(err, res) {
+  console.log(req)
+  console.log(res);
 
+  });
+});
 // new
 app.get("/post/new",function(req,res){
 
@@ -144,7 +162,12 @@ app.delete("/posts/:post_id/comments/:id",function(req,res){
 app.get("*",function(req,res){
 
 });
-
+client.geocodeForward('Chester, NJ', function(err, res) {
+  // 
+  //
+  //
+  //
+});
 // listening to server
 app.listen(3000, function(){
   console.log("Server is listening on port 3000");

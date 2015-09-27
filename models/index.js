@@ -1,18 +1,6 @@
 var mongoose = require("mongoose");
-var User = require("./user");
-var Post = require("./post");
+mongoose.connect("mongodb://localhost/mongo_zoo_app");
 
-var commentSchema = new mongoose.Schema({
-  content:{type:String,required:true},
-  post:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Post"
-  },
-  user:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
-  }
-});
-
-var Comment = mongoose.model("Comment", animalSchema);
-module.exports = Comment;
+module.exports.User = require("./user");
+module.exports.Post = require("./post");
+module.exports.Post = require("./comment");
