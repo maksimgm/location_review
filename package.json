@@ -1,0 +1,30 @@
+{
+  "name": "location_review",
+  "version": "1.0.0",
+  "description": "README ===",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maksimgm/location_review.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maksimgm/location_review/issues"
+  },
+  "homepage": "https://github.com/maksimgm/location_review#readme",
+  "dependencies": {
+    "bcrypt": "^0.8.5",
+    "body-parser": "^1.14.0",
+    "cookie-session": "^1.2.0",
+    "ejs": "^2.3.4",
+    "express": "^4.13.3",
+    "method-override": "^2.3.5",
+    "mongoose": "^4.1.8",
+    "morgan": "^1.6.1",
+    "session": "^0.1.0"
+  }
+}
