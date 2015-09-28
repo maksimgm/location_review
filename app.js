@@ -70,12 +70,7 @@ app.get("/logout", function (req, res) {
   req.logout();
   res.redirect("/");
 });
-app.post("/location/:location",function(req,res){
-  client.places(req.params, function(err, res) {
-  console.log(req)
-  console.log(res);
 
-});
 
 
 // **********Post*************
@@ -83,13 +78,9 @@ app.post("/location/:location",function(req,res){
 app.get("/posts",function(req,res){
 
 });
-client.places("San Jose,CA", function(err, res) {
-  console.log(req);
-  console.log(res);
-});
-app.post("/location/San Jose, CA",function(req,res){
-  client.places(req.params, function(err, res) {
-  console.log(req)
+
+app.post("/location/:location",function(req,res){
+  client.geocodeForward(req, function(err, res) {
   console.log(res);
 
   });
