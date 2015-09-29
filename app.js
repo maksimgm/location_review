@@ -119,24 +119,28 @@ app.get("/posts", function(req,res){
 
 // new
 app.get("/posts/new",routeMiddleware.ensureLoggedIn, function(req,res){
-  console.log(user_id);
-  res.render("posts/new",{user_id : session.id});  
+  res.render("posts/new");  
 });
 
 // create
 app.post("/posts", routeMiddleware.ensureLoggedIn, function(req,res){
-  db.Post.create(req.body.id,function(err,post){
-    if(err){
-      console.log(err);
-    }else{
-      post.save();
-      res.redirect("/posts");
-    }
-  });
+  // db.Post.create(req.body.id,function(err,post){
+  //   if(err){
+  //     console.log(err);
+  //   }else{
+  //     post.save();
+  //     res.redirect("/posts");
+  //   }
+  // });
+  var post = new db.Post(req.body.post);
+  console.log("POST*****", post);
+  post.user = req.session.id;
+  post.save();
+  res.redirect("/posts");
 });
 
 // show
-app.get("/posts/:id",function(req,res){
+app.get("/posts/:id", routeMiddleware.ensureLoggedIn, function(req,res){
   db.Post.findById(req.param.id,function(err,post){
     if(err){
       console.log(err);
@@ -152,23 +156,33 @@ app.get("/posts/:id",function(req,res){
 // });
 
 // update
-app.get("/posts/:id/edit",function(req,res){
-  res.render("/posts/edit");
+app.get("/posts/:id/edit", routeMiddleware.ensureLoggedIn,function(req,res){
+  db.Post.findById(req.params.id, function(err,post){
+    res.render("posts/edit",{post:post});
+  });
 });
 
-app.put("/posts/:id",function(req,res){
-  db.Post.findByIdAndUpdate(req.param.id, req.body.id, function(err,post){
+app.put("/posts/:id",routeMiddleware.ensureLoggedIn, function(req,res){
+  console.log("POST EDIT");
+  db.Post.findByIdAndUpdate(req.params.id, req.body.post, function(err,post){
     if (err){
       console.log(err);
     }else{
-      res.redirect("/posts",{post:post});
+      console.log(req.body.post);
+      res.redirect("/posts");
     }
   });
 });
 
 // delete
 app.delete("/posts/:id",function(req,res){
-
+  db.Post.findByIdAndRemove(req.params.id,function(err,post){
+    if(err){
+      console.log(err);
+    }else{
+      res.redirect("/posts");
+    }
+  });
 });
 
 
@@ -221,12 +235,12 @@ app.delete("/posts/:post_id/comments/:id",function(req,res){
 app.get("*",function(req,res){
 
 });
-client.geocodeForward('Chester, NJ', function(err, res) {
-  // 
-  //
-  //
-  //
-});
+// client.geocodeForward('Chester, NJ', function(err, res) {
+   // 
+   //
+   //
+   //
+// });
 // listening to server
 app.listen(3000, function(){
   console.log("Server is listening on port 3000");

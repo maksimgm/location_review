@@ -2,28 +2,28 @@
 <include "../partial/navigation">
 <div class="container">
   <h1>EDIT POST</h1>
-  <form action="/posts/<%post.id%>/">
+  <form action="/posts/<%=post.id%>?_method=put" method="POST">
     <div class="form-group">
       <label for="title"></label>
-      <input type="text" name="post[title]" id="title" class="form-control">
+      <input type="text" name="post[title]" id="title" class="form-control" value="post[title]">
     </div>
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label for="date"></label>
-      <input type="text" name="post[date]" id="date" class="form-control">
-    </div>
+      <input type="text" name="post[date]" id="date" class="form-control" value="post[title]">
+    </div> -->
     <div class="form-group">
     <!-- add upload button -->
       <label for="image"></label>
-      <input type="button" name="post[image]" id="image" class="form-control">
+      <input type="button" name="post[image]" id="image" class="form-control" value="post[image]">
     </div>
     <div class="form-group">
       <label for="description"></label>
-      <input type="text" name="post[description]" id="description" class="form-control">
+      <input type="text" name="post[description]" id="description" class="form-control" value="post[description]">
     </div>
     <div class="form-group">
       <!-- geo locate button -->
       <label for="location"></label>
-      <input type="button" name="post[location]" id="location" class="form-control">
+      <input type="button" name="post[location]" id="location" class="form-control" value="post[location]">
     </div>
     <input type="submit" value="Update" class="btn btn-success btn-block">
   </form>

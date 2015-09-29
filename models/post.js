@@ -7,10 +7,10 @@ var datePost = new Date(date.getMonth()+ "/"+ date.getDay()+"/"+date.getYear());
 
 var postSchema = new mongoose.Schema({
   title: {type:String, required:true},
-  date: {type:String, default:datePost},
-  image: {type:String, required:true},
+  date: {type:String},
+  image: {type:String},
   description: {type:String, required:true},
-  location: {type:String, required:true},
+  location: {type:String},
   user:{
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
