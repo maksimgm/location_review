@@ -1,13 +1,13 @@
-var express = require("express");
-  app = express(),
-  bodyParser = require("body-parser"),
-  methodOverride = require('method-override'),
-  morgan = require('morgan'),
-  MapboxClient = require('mapbox'),
-  db = require("./models"),
-  session = require("cookie-session"),
-  loginMiddleware = require("./middleware/loginHelper"),
-  routeMiddleware = require("./middleware/routeHelper");
+var express = require("express"),
+  app = express();
+bodyParser = require("body-parser");
+methodOverride = require('method-override');
+morgan = require('morgan');
+MapboxClient = require('mapbox');
+db = require("./models");
+session = require("cookie-session");
+loginMiddleware = require("./middleware/loginHelper");
+routeMiddleware = require("./middleware/routeHelper");
 
 app.set("view engine", "ejs");
 app.use(express.static(__dirname+"/public"));
@@ -66,7 +66,7 @@ app.post('/signup', function(req,res){
   });
 });
 
-app.get("/logout", function (req, res) {
+app.get("/location/:location", function (req, res) {
   req.logout();
   res.redirect("/");
 });
@@ -74,17 +74,21 @@ app.get("/logout", function (req, res) {
 
 
 // **********Post*************
-// index
-app.get("/posts",function(req,res){
 
-});
-
-app.post("/location/:location",function(req,res){
-  client.geocodeForward(req, function(err, res) {
+// include location query in the app.post.....("")
+client.geocodeForward(req, function(err, res) {
   console.log(res);
 
-  });
 });
+
+// index
+app.get("/posts", preventLoginSignup, ensureLoggedIn, function(req,res){
+  db.Posts.
+});
+
+// app.post("",function(req,res){
+
+// });
 // new
 app.get("/post/new",function(req,res){
 
