@@ -46,4 +46,6 @@ var routeHelpers = {
   }
 };
 
+console.log("route middleware, CHECK");
+
 module.exports = routeHelpers;

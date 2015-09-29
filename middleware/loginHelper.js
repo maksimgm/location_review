@@ -15,4 +15,6 @@ var loginHelpers = function (req, res, next) {
   next();
 };
 
+console.log("login middleware, CHECK");
+
 module.exports = loginHelpers;

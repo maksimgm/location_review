@@ -1,0 +1,4 @@
+<include "../partial/header">
+<h1>PAGE NOT FOUND. 404 ERROR!!!</h1>
+<a href="/">home</a>
+<include "../partial/footer">

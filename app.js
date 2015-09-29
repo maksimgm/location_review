@@ -1,21 +1,23 @@
 var express = require("express"),
   app = express();
+require('dotenv').load();
+var apiKey = process.env.APIKEY;
 var bodyParser = require("body-parser");
 var methodOverride = require('method-override');
 var morgan = require('morgan');
 var MapboxClient = require('mapbox');
+var client = new MapboxClient(apiKey);
 var db = require("./models");
 var session = require("cookie-session");
 var loginMiddleware = require("./middleware/loginHelper");
 var routeMiddleware = require("./middleware/routeHelper");
-require('dotenv').load();
 
 
 app.set("view engine", "ejs");
 app.use(express.static(__dirname+"/public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
-app.use(morgan('dev'));
+app.use(morgan('tiny'));
 app.use(loginMiddleware);
 
 app.use(session({
@@ -26,11 +28,13 @@ app.use(session({
 
   
 // var url = "https://api.mapbox.com/v4/geocode/mapbox.places/";
-apiKey = "pk.eyJ1IjoibWFrc2ltbWFtcmlrb3YiLCJhIjoiY2lmMjE1ZTJ1MTFubHNxbTNlZjF5MTJrNyJ9.4SroRHM54MMtWp1NmrMbLA";
-var client = new MapboxClient(apiKey);
-// // **********User*************
 
-app.get('/  ', routeMiddleware.preventLoginSignup, function(req,res){
+// // **********User*************
+app.get("/",function(req,res){
+  res.redirect("/posts");
+});
+
+app.get('/users/index',routeMiddleware.preventLoginSignup, function(req,res){
   res.render('users/index');
 });
 
@@ -68,10 +72,15 @@ app.post('/signup', function(req,res){
   });
 });
 
-app.get("/location/:location", function (req, res) {
+app.get("/logout", function (req, res) {
   req.logout();
   res.redirect("/");
 });
+
+// app.get("/location/:location", function (req, res) {
+//   req.logout();
+//   res.redirect("/");
+// });
 
 
 
@@ -87,6 +96,7 @@ app.get("/location/:location", function (req, res) {
 app.get("/posts", function(req,res){
   // user refers to key in post.js model
   // username refers to key in user.js model
+  console.log("IT GOT THIS FAR!!!");
   db.Post.find({}.populate("user","username").exec(function(err,posts){
     // cookie.session.id
     if(err){
