@@ -109,7 +109,7 @@ app.get("/posts", function(req,res){
       }else{
       db.User.findById(req.session.id,function(err,user){
         console.log("USERNAME IS NOT NULL!!!");
-        res.render("posts/index",{posts:posts,currentUser:user});
+        res.render("posts/index",{posts:posts,currentUser:user.username});
         // console.log(user.username);
       });
       }
@@ -118,13 +118,21 @@ app.get("/posts", function(req,res){
 });
 
 // new
-app.get("/post/new",routeMiddleware.ensureLoggedIn, function(req,res){
+app.get("/posts/new",routeMiddleware.ensureLoggedIn, function(req,res){
   console.log(user_id);
   res.render("posts/new",{user_id : session.id});  
 });
 
-app.post("/posts",function(req,res){
-  db.Post.
+// create
+app.post("/posts", routeMiddleware.ensureLoggedIn, function(req,res){
+  db.Post.create(req.body.id,function(err,post){
+    if(err){
+      console.log(err);
+    }else{
+      post.save();
+      res.redirect("/posts");
+    }
+  });
 });
 
 // show
@@ -145,11 +153,17 @@ app.get("/posts/:id",function(req,res){
 
 // update
 app.get("/posts/:id/edit",function(req,res){
-
+  res.render("/posts/edit");
 });
 
 app.put("/posts/:id",function(req,res){
-
+  db.Post.findByIdAndUpdate(req.param.id, req.body.id, function(err,post){
+    if (err){
+      console.log(err);
+    }else{
+      res.redirect("/posts",{post:post});
+    }
+  });
 });
 
 // delete
