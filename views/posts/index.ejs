@@ -1,6 +1,8 @@
 <include "../partial/header">
 <include "../partial/navigation">
 <!-- value currentUser -->
+<h1>HELLO THERE. THIS IS POSTS INDEX</h1>
+<h3><%=currentUser%>you are logged in.</h3>
 <div class="container">
   <div class="row">
     <div class="col-xs-8">
@@ -9,29 +11,29 @@
           <!-- upvotes+downvotes -->
         </div>
         <div class="col-xs-8">
-          <%=post.title%>
+          <%=posts.title%>
         </div>
       </div>
       <div class="row">
         <div class="col-xs-12">
-          <%=post.image%>
+          <%=posts.image%>
         </div>
       </div>
     </div>
     <div class="col-xs-4">
       <div class="row">
         <div class="col-xs-12">
-          <%=post.location%>
+          <%=posts.location%>
         </div>
       </div>
       <div class="row">
         <div class="col-xs-12">
-          <%=post.date%>
+          <%=posts.date%>
         </div>
       </div>
       <div class="row">
         <div class="col-xs-12">
-          <%=post.description%>
+          <%=posts.description%>
         </div>
       </div>
       <div class="row">
@@ -39,7 +41,7 @@
           <a href="/edit" class="btn btn-info ">EDIT</a>
         </div>
         <div class="col-xs-6">
-          <form action="/posts/<%=post.id%>?_method=delete" method="POST">
+          <form action="/posts/<%=posts.id%>?_method=delete" method="POST">
             <label for="delete"></label>
             <button type="button" class="btn btn-default" id="delete">DELETE</button>
           </form>

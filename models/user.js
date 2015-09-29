@@ -1,24 +1,25 @@
-var mongoose = require("mongoose");
-var Post = require("./post");
-var Comment = require("./comment");
+var bcrypt = require('bcrypt');
+var SALT_WORK_FACTOR = 10;
+var mongoose = require('mongoose');
 
-var userSchema = new mongoose.Schema({
-  username:{
-    type:String, 
-    required: true,
-    lowercase: true,
-    unique: true
-  },
-  password:{type:String,required:true},
-  posts:[{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Post"
-  }],
-  comments:[{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Comment"
-  }]
-});
+var userSchema = new mongoose.Schema ({
+                      username: {
+                        type: String,
+                        required: true,
+                        lowercase: true,
+                        unique: true
+                        },
+                      password: {type: String, required: true},
+                      avatar: String,
+                      posts: [{
+                        type: mongoose.Schema.Types.ObjectId,
+                        ref: "Post"
+                      }],
+                      comments: [{
+                        type: mongoose.Schema.Types.ObjectId,
+                        ref: "Comment"
+                      }]
+                    });
 
 userSchema.pre('save', function(next) {
   var user = this;
@@ -66,10 +67,7 @@ userSchema.methods.checkPassword = function(password, callback) {
   });
 };
 
-userSchema.pre("remove",function(next){
-  Post.remove({user: this._id}).exec();
-  next();
-});
 
-var User = mongoose.model("User",userSchema);
+var User = mongoose.model("User", userSchema);
+
 module.exports = User;

@@ -60,6 +60,7 @@ app.get('/signup', routeMiddleware.preventLoginSignup, function(req,res){
 });
 
 app.post('/signup', function(req,res){
+  console.log("SIGNUP POST");
    db.User.create(req.body.user, function(err, user){
     if (user) {
       console.log(user);
@@ -96,47 +97,51 @@ app.get("/logout", function (req, res) {
 app.get("/posts", function(req,res){
   // user refers to key in post.js model
   // username refers to key in user.js model
-  console.log("IT GOT THIS FAR!!!");
-  db.Post.find({}.populate("user","username").exec(function(err,posts){
+  // console.log("IT GOT THIS FAR!!!");
+  db.Post.find({}).populate("user","username").exec(function(err,posts){
     // cookie.session.id
     if(err){
       console.log(err);
     }else{
       if (req.session.id===null) {
-        res.render("/posts/index",{posts:posts,currentUser:""});
+        console.log("USERNAME IS NULL!!!");
+        res.render("posts/index",{posts:posts,currentUser:""});
       }else{
       db.User.findById(req.session.id,function(err,user){
-        res.render("/posts/index",{posts:posts,currentUser:user.username});
-        console.log(user.username);
+        console.log("USERNAME IS NOT NULL!!!");
+        res.render("posts/index",{posts:posts,currentUser:user});
+        // console.log(user.username);
       });
       }
     }
-  }));
+  });
 });
 
 // new
 app.get("/post/new",routeMiddleware.ensureLoggedIn, function(req,res){
-  db.Post.create(function(err,post){
-    if (err) {
+  console.log(user_id);
+  res.render("posts/new",{user_id : session.id});  
+});
+
+app.post("/posts",function(req,res){
+  db.Post.
+});
+
+// show
+app.get("/posts/:id",function(req,res){
+  db.Post.findById(req.param.id,function(err,post){
+    if(err){
       console.log(err);
     }else{
-      console.log(user_id);
-      res.render("posts/new",{user_id : session.id});
+      res.render("posts/show",{post:post});
     }
   });
 });
 
-// show
-app.get("/posts/show",function(req,res){
-  db.Post.findById(function(err,post){
+// edit
+// app.get("/posts/:id",function(req,res){
 
-  });
-});
-
-// create
-app.post("/posts",function(req,res){
-
-});
+// });
 
 // update
 app.get("/posts/:id/edit",function(req,res){
@@ -151,6 +156,17 @@ app.put("/posts/:id",function(req,res){
 app.delete("/posts/:id",function(req,res){
 
 });
+
+
+
+
+
+
+
+
+
+
+
 
 // **********Comment*************
 // index
