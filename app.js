@@ -1,13 +1,15 @@
 var express = require("express"),
   app = express();
-bodyParser = require("body-parser");
-methodOverride = require('method-override');
-morgan = require('morgan');
-MapboxClient = require('mapbox');
-db = require("./models");
-session = require("cookie-session");
-loginMiddleware = require("./middleware/loginHelper");
-routeMiddleware = require("./middleware/routeHelper");
+var bodyParser = require("body-parser");
+var methodOverride = require('method-override');
+var morgan = require('morgan');
+var MapboxClient = require('mapbox');
+var db = require("./models");
+var session = require("cookie-session");
+var loginMiddleware = require("./middleware/loginHelper");
+var routeMiddleware = require("./middleware/routeHelper");
+require('dotenv').load();
+
 
 app.set("view engine", "ejs");
 app.use(express.static(__dirname+"/public"));
@@ -76,27 +78,49 @@ app.get("/location/:location", function (req, res) {
 // **********Post*************
 
 // include location query in the app.post.....("")
-client.geocodeForward(req, function(err, res) {
-  console.log(res);
-
-});
-
-// index
-app.get("/posts", preventLoginSignup, ensureLoggedIn, function(req,res){
-  db.Posts.
-});
-
-// app.post("",function(req,res){
+// client.geocodeForward(req, function(err, res) {
+//   console.log(res);
 
 // });
-// new
-app.get("/post/new",function(req,res){
 
+// index
+app.get("/posts", function(req,res){
+  // user refers to key in post.js model
+  // username refers to key in user.js model
+  db.Post.find({}.populate("user","username").exec(function(err,posts){
+    // cookie.session.id
+    if(err){
+      console.log(err);
+    }else{
+      if (req.session.id===null) {
+        res.render("/posts/index",{posts:posts,currentUser:""});
+      }else{
+      db.User.findById(req.session.id,function(err,user){
+        res.render("/posts/index",{posts:posts,currentUser:user.username});
+        console.log(user.username);
+      });
+      }
+    }
+  }));
+});
+
+// new
+app.get("/post/new",routeMiddleware.ensureLoggedIn, function(req,res){
+  db.Post.create(function(err,post){
+    if (err) {
+      console.log(err);
+    }else{
+      console.log(user_id);
+      res.render("posts/new",{user_id : session.id});
+    }
+  });
 });
 
 // show
 app.get("/posts/show",function(req,res){
+  db.Post.findById(function(err,post){
 
+  });
 });
 
 // create

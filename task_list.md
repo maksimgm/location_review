@@ -1,12 +1,12 @@
 <!-- P0: Draw out Wireframe -->
 P1: set up posts for author for every ejs page made
 P1: understand geolocation from fornt to back
-P1: understand the use of cookie sessions in code
 P1: implement geolocation into application for posts.
-
 P1: set up posts for author for every ejs page made
-P1: Test application with postman
 
+P1: set up comments for posts
+
+P2: Test application with postman
 P2: style application using bootstrap.
 P2: focus on loyout for login, signup, and home page
 
