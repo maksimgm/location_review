@@ -163,7 +163,7 @@ app.get("/posts/:id/edit", routeMiddleware.ensureLoggedIn,function(req,res){
 });
 
 app.put("/posts/:id",routeMiddleware.ensureLoggedIn, function(req,res){
-  console.log("POST EDIT");
+  // console.log("POST EDIT");
   db.Post.findByIdAndUpdate(req.params.id, req.body.post, function(err,post){
     if (err){
       console.log(err);
@@ -176,10 +176,12 @@ app.put("/posts/:id",routeMiddleware.ensureLoggedIn, function(req,res){
 
 // delete
 app.delete("/posts/:id",function(req,res){
+  console.log("DELETE BEFORE DB");
   db.Post.findByIdAndRemove(req.params.id,function(err,post){
     if(err){
       console.log(err);
     }else{
+      console.log("DELETE AFTER DB");
       res.redirect("/posts");
     }
   });

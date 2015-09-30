@@ -43,13 +43,12 @@
       <div class="row">
         <div class="col-xs-6">
           <form action="/posts/<%=post.id%>?_method=delete" method="POST">
-            <label for="delete"></label>
-            <button type="button" class="btn btn-default" id="delete">DELETE</button>
+          <input type="submit" class="btn btn-default" id="delete"value="DELETE">
           </form>
-      <%})%>
         </div>
       </div>
     </div>
+      <%})%>
   </div>
 </div>
 <include "../partial/footer">
