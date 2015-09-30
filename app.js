@@ -258,11 +258,11 @@ app.get("/comments/:id/edit",routeMiddleware.ensureCorrectUserForComment ,functi
 });
 
 app.put("/comments/:id",routeMiddleware.ensureCorrectUserForComment, function(req,res){
-  db.Comment.findByIdAndUpdate(req.params,req.body.comment,function(err,comment){
+  db.Comment.findByIdAndUpdate(req.params.id,req.body.comment,function(err,comment){
   if(err){
     console.log(err);
   }else{
-      res.render("/posts/"+comment.post+"/comments");
+      res.redirect("/posts/"+comment.post+"/comments");
     }
   });
 });
@@ -273,7 +273,7 @@ app.delete("/comments/:id",function(req,res){
     if(err){
       console.log(err);
     }else{
-      res.redirect("/posts"+comment.post+"/comments");
+      res.redirect("/posts/"+comment.post+"/comments");
     }
   });
 });
