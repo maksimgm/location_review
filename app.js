@@ -108,9 +108,13 @@ app.get("/posts", function(req,res){
         res.render("posts/index",{posts:posts,currentUser:""});
       }else{
       db.User.findById(req.session.id,function(err,user){
-        console.log("USERNAME IS NOT NULL!!!");
-        res.render("posts/index",{posts:posts,currentUser:user.username});
+        if (err) {
+          console.log(err);
+        } else {
+        console.log("USERNAME IS NOT NULL!!!", user);
+        res.render("posts/index",{posts: posts, currentUser: user.username});
         // console.log(user.username);
+        }
       });
       }
     }
@@ -141,7 +145,7 @@ app.post("/posts", routeMiddleware.ensureLoggedIn, function(req,res){
 
 // show
 app.get("/posts/:id", routeMiddleware.ensureLoggedIn, function(req,res){
-  db.Post.findById(req.param.id,function(err,post){
+  db.Post.findById(req.param.id).populate("comments").exec(function(err,post){
     if(err){
       console.log(err);
     }else{
@@ -175,7 +179,7 @@ app.put("/posts/:id",routeMiddleware.ensureLoggedIn, function(req,res){
 });
 
 // delete
-app.delete("/posts/:id",function(req,res){
+app.delete("/posts/:id",routeMiddleware.ensureLoggedIn, function(req,res){
   console.log("DELETE BEFORE DB");
   db.Post.findByIdAndRemove(req.params.id,function(err,post){
     if(err){
@@ -188,54 +192,83 @@ app.delete("/posts/:id",function(req,res){
 });
 
 
-
-
-
-
-
-
-
-
-
-
 // **********Comment*************
 // index
 app.get("/posts/:post_id/comments",function(req,res){
-
+  db.Comment.find({post:req.params.post_id}).populate("user").exec(function(err,comments){
+    if(err){
+      console.log(err);
+    }else{
+      res.render("comments/index",{comments:comments});
+    }
+  });
 });
 
 // new
-app.get("/posts/:post_id/comments/new",function(req,res){
-
+app.get("/posts/:post_id/comments/new",routeMiddleware.ensureLoggedIn, function(req,res){
+  db.Post.findById(req.params.post_id, function(err,post){
+    res.render("comments/new",{post:post, user_id:req.session.id});
+  });
 });
 
 // show
-app.get("/posts/:post_id/comments/show",function(req,res){
+// app.get("/posts/:post_id/comments/show",function(req,res){
 
-});
+// });
 
 // create
-app.post("/posts/:post_id/comments",function(req,res){
-
+app.post("/posts/:post_id/comments",routeMiddleware.ensureLoggedIn, function(req,res){
+  db.Comment.create(req.body.comment,function(err,comment){
+    if(err){
+      console.log(err);
+      res.render("comments/new");
+    }else{
+      db.Post.findById(req.params.post_id,function(err,post){
+        post.comments.push(comments);
+        comments.post = post_id;
+        comments.save();
+        post.save();
+        res.redirect("/posts/"+req.params.post_id+"/comments");
+      });
+    }
+  });
 });
 
 // update
-app.get("/posts/:post_id/comments/:id/edit",function(req,res){
-
+app.get("/comments/:id/edit",routeMiddleware.ensureCorrectUserForComment ,function(req,res){
+  db.Comment.findById(req.params.id, function(err,comment){
+    if(err){
+      console.log(err);
+    }else{
+      res.render("comments/edit",{comment:comment});
+    }
+  });
 });
 
-app.put("/posts/:post_id/comments/:id",function(req,res){
-
+app.put("/comments/:id",routeMiddleware.ensureCorrectUserForComment, function(req,res){
+  db.Comment.findByIdAndUpdate(req.params,req.body.comment,function(err,comment){
+  if(err){
+    console.log(err);
+  }else{
+      res.render("/posts/"+comment.post+"/comments");
+    }
+  });
 });
 
 // delete
-app.delete("/posts/:post_id/comments/:id",function(req,res){
-
+app.delete("/comments/:id",function(req,res){
+  db.Comment.findByIdAndRemove(req.params.id,function(err,comment){
+    if(err){
+      console.log(err);
+    }else{
+      res.redirect("/posts"+comment.post+"/comments");
+    }
+  });
 });
 
 // catch all
 app.get("*",function(req,res){
-
+  res.render("errors/404");
 });
 // client.geocodeForward('Chester, NJ', function(err, res) {
    // 

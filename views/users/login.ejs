@@ -1,4 +1,4 @@
-<include "../partial/header">
+<%include ../partials/header%>
     <h3>Login</h3>
     <form action="/login" + method="POST">
      <!--  <div>
@@ -16,13 +16,13 @@
       </div> -->
       <div>
         <label for="username">User Name:</label>
-        <input type="text" id="username" autofocus>
+        <input type="text" id="username" name="user[username]" autofocus>
       </div>
       <div>
         <label for="password">Password:</label>
-        <input type="text" id="password">
+        <input type="text" id="password" name="user[password]">
       </div>
       <input type="submit" class="">
       <a href="/signup">Don't have an account. Sign Up!</a>
   </form>
-<include "../partial/footer">
+<%include ../partials/footer%>

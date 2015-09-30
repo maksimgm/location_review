@@ -1,0 +1,17 @@
+<%include ../partials/header%>
+<%include ../partials/navigation%>
+<div>
+  <a href="/">See All Posts</a>
+</div>
+<h1>Comments</h1>
+<%comments.forEach(function(comment){%>
+  <p><%=comment.date%></p>
+  <p><%=comment.body%></p>
+  <div>
+    <a href="/comments/<%=comment.id%>/edit">Edit</a>
+    <form action="/comments<%comment.id%>?_method=delete" method="POST">
+      <input type="submit" value="Delete">
+    </form>
+  </div>
+<%})%>
+<%include ../partials/footer%>

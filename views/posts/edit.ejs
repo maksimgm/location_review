@@ -1,5 +1,5 @@
-<include "../partial/header">
-<include "../partial/navigation">
+<%include ../partials/header%>
+<%include ../partials/navigation%>
 <div class="container">
   <h1>EDIT POST</h1>
   <form action="/posts/<%=post.id%>?_method=put" method="POST">
@@ -31,4 +31,4 @@
     <input type="submit" value="Update" class="btn btn-success btn-block">
   </form>
 </div>
-<include "../partial/footer">
+<%include ../partials/footer%>
