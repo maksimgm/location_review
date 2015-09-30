@@ -2,12 +2,12 @@ var mongoose = require("mongoose");
 var User = require("./user");
 var Comment = require("./comment");
 
-var date = new Date();
-var datePost = new Date(date.getMonth()+ "/"+ date.getDay()+"/"+date.getYear());
+// var date = new Date();
+// var datePost = new Date(date.getMonth()+ "/"+ date.getDay()+"/"+date.getYear());
 
 var postSchema = new mongoose.Schema({
   title: {type:String, required:true},
-  date: {type:String},
+  date: {type:String, default:new Date()},
   image: {type:String},
   description: {type:String, required:true},
   location: {type:String},

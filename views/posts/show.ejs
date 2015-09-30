@@ -2,9 +2,16 @@
 <%include ../partials/navigation%>
 <div class="container">
   <h3>Title:<%=post.title%></h3>
-  <h3>Date:<%=post.date%></h3>
   <h3>Image:<%=post.image%></h3>
   <h3>Description:<%=post.description%></h3>
   <h3>Location:<%=post.location%></h3>
+  <h4>Date:<%=post.date%></h4>
+</div>
+<div>
+  <div class="container">
+    <a href="/posts/<%=post._id%>/comments" class="btn btn-success">See Comments</a>
+    <a href="/posts/<%=post._id%>/comments/new" class="btn btn-success">Add New Comment</a>
+    <div id="comments"></div>
+  </div>  
 </div>
 <%include ../partials/footer%>

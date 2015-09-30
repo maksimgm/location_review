@@ -1,54 +1,46 @@
 <%include ../partials/header%>
 <%include ../partials/navigation%>
 <!-- value currentUser -->
-<h1>HELLO THERE. THIS IS POSTS INDEX</h1>
-<h3><%=currentUser%> you are logged in.</h3>
+<h1 class="text-center">HELLO THERE. THIS IS POSTS INDEX</h1>
+<h3 class="text-center">You are logged in as: <%=currentUser%></h3>
 <div class="container">
-  <div class="row">
-    <div class="col-xs-8">
-      <div class="row">
-        <div class="col-xs-4">
-          <!-- upvotes+downvotes -->
-        </div>
-        <%posts.forEach(function(post){%>
-        <div class="col-xs-8">
-          <%=post.title%>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <%=post.image%>
-        </div>
-      </div>
-    </div>
-    <div class="col-xs-4">
-      <div class="row">
-        <div class="col-xs-12">
-          <%=post.location%>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <%=post.date%>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <%=post.description%>
-        </div>
-      </div>
-        <div class="col-xs-6">
-          <a href="/posts/<%=post.id%>/edit" class="btn btn-info ">EDIT</a>
-        </div>
-      <div class="row">
-        <div class="col-xs-6">
-          <form action="/posts/<%=post.id%>?_method=delete" method="POST">
-          <input type="submit" class="btn btn-default" id="delete"value="DELETE">
-          </form>
-        </div>
-      </div>
-    </div>
-      <%})%>
+  
+        <!-- <div class="col-xs-4">
+          upvotes+downvotes
+        </div> -->
+  <div class="col-xs-10 col-xs-offset-1">
+    <%posts.forEach(function(post){%>
+  <div class="col-xs-8 col-xs-offset-2">
+    <a href="/posts/<%=post._id%>"><%=post.title%></a> 
+  </div>  
+  <div class="col-xs-8 col-xs-offset-2">
+    <%=post.image%>
+  </div>
+  <div class="col-xs-8 col-xs-offset-2">
+    <%=post.location%>
+  </div>
+  <div class="col-xs-8 col-xs-offset-2">
+    <%=post.description%>
+  </div>
+  <div class="col-xs-8 col-xs-offset-2">
+    <%=post.date%>
+  </div>
+
+  <%if(post.user === currentUser){%>
+  <div class="col-xs-5">
+    <a href="/posts/<%=post.id%>/edit" class="btn btn-info ">EDIT</a>
+  </div>
+  <div class="col-xs-5">
+    <form action="/posts/<%=post.id%>?_method=delete" method="POST">
+      <input type="submit" class="btn btn-default" id="delete"value="DELETE">
+    </form>
+  </div>
+      <%}%>
+  
+
+
+    <%})%>
+
   </div>
 </div>
 <%include ../partials/footer%>

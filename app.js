@@ -26,6 +26,13 @@ app.use(session({
   name: "snickerdoddle"
 }));
 
+app.use(function(req, res, next) {
+    if (req.session.id === undefined) {
+      req.session.id = null;
+    }
+    next();
+});
+
   
 // var url = "https://api.mapbox.com/v4/geocode/mapbox.places/";
 
@@ -98,24 +105,27 @@ app.get("/posts", function(req,res){
   // user refers to key in post.js model
   // username refers to key in user.js model
   // console.log("IT GOT THIS FAR!!!");
-  db.Post.find({}).populate("user","username").exec(function(err,posts){
+  console.log("someone has made a get for /posts");
+  db.Post.find({}).populate({path:"user", select:"username"}).exec(function(err,posts){
     // cookie.session.id
     if(err){
       console.log(err);
     }else{
       if (req.session.id===null) {
-        console.log("USERNAME IS NULL!!!");
+        console.log("no one is logged in!!!");
         res.render("posts/index",{posts:posts,currentUser:""});
-      }else{
-      db.User.findById(req.session.id,function(err,user){
-        if (err) {
-          console.log(err);
-        } else {
-        console.log("USERNAME IS NOT NULL!!!", user);
-        res.render("posts/index",{posts: posts, currentUser: user.username});
-        // console.log(user.username);
-        }
-      });
+      } else {
+        db.User.findById(req.session.id,function(err,user){
+          if (err) {
+            console.log(err);
+          } else if (user === null) {
+            console.log('the session id is not found', req.session.id);
+          } else {
+            console.log("found user based on session id!!!", user);
+            res.render("posts/index",{posts: posts, currentUser: user.username});
+            // console.log(user.username);
+          }
+        });
       }
     }
   });
@@ -145,7 +155,7 @@ app.post("/posts", routeMiddleware.ensureLoggedIn, function(req,res){
 
 // show
 app.get("/posts/:id", routeMiddleware.ensureLoggedIn, function(req,res){
-  db.Post.findById(req.param.id).populate("comments").exec(function(err,post){
+  db.Post.findById(req.params.id).populate("comments").exec(function(err,post){
     if(err){
       console.log(err);
     }else{
@@ -218,15 +228,17 @@ app.get("/posts/:post_id/comments/new",routeMiddleware.ensureLoggedIn, function(
 
 // create
 app.post("/posts/:post_id/comments",routeMiddleware.ensureLoggedIn, function(req,res){
+  // console.log("WRONG REDIRECTION IN NEW COMMENT");
   db.Comment.create(req.body.comment,function(err,comment){
     if(err){
-      console.log(err);
+      console.log("ERROR!!!!", err);
       res.render("comments/new");
     }else{
       db.Post.findById(req.params.post_id,function(err,post){
-        post.comments.push(comments);
-        comments.post = post_id;
-        comments.save();
+        post.comments.push(comment);
+        comment.post = post.id;
+        comment.user = req.session.id;
+        comment.save();
         post.save();
         res.redirect("/posts/"+req.params.post_id+"/comments");
       });
