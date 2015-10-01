@@ -1,8 +1,9 @@
 <!-- P0: Draw out Wireframe -->
 P1: set up posts for author for every ejs page made...CHECK
-P1: understand geolocation from front to back
-P1: implement geolocation into application for posts.
-P1: set up comments for posts
+P1: understand geolocation from front to back....CHECK
+P1: implement geolocation into application for posts.....>CHECK
+P1: set up comments for posts...>CHECK
+P1: 
 
 P2: Test application with postman
 P2: style application using bootstrap.

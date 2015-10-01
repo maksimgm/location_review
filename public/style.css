@@ -1,0 +1,24 @@
+label, h1, h2, h3, h4, h5, h6{
+  font-family: "Palatino Linotype", "Book Antiqua", serif;
+  font-color: white;
+}
+
+.labelFont{
+  font-size: 18px;
+  font-color: white;
+}
+
+.formWrapper{
+  background: #F0E68C;
+  height: 350px;
+  width: 80%;
+  border: 3px #00BFFF solid;
+  border-radius: 10px; 
+  margin: 0 auto;
+  padding: 15px;
+}
+
+body{
+  background: url("https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQz7O4k7bxSdRrT6JRas3w4cEQ7mId4N3kjYjioKj2BWwKeTNQ2QQ")center center fixed;
+  background-position: center;
+}

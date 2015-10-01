@@ -1,5 +1,5 @@
 var mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost/location_review");
+mongoose.connect(process.env.MONGOLAB_URI || "mongodb://localhost/location_review");
 
 mongoose.set("debug",true);
 

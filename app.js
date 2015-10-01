@@ -13,8 +13,6 @@ var loginMiddleware = require("./middleware/loginHelper");
 var routeMiddleware = require("./middleware/routeHelper");
 
 
-
-
 app.set("view engine", "ejs");
 app.use(express.static(__dirname+"/public"));
 app.use(bodyParser.json());
@@ -184,6 +182,7 @@ app.post("/posts", function(req,res){
   console.log("POST*****", post);
   console.log("POST BODY",req.body.post);
   post.user = req.session.id;
+  
   post.save();
   res.redirect("/posts");
 });
@@ -324,6 +323,6 @@ app.get("*",function(req,res){
    //
 // });
 // listening to server
-app.listen(3000, function(){
+app.listen(process.env.PORT || 3000, function(){
   console.log("Server is listening on port 3000");
 });

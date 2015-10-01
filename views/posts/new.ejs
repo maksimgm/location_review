@@ -1,31 +1,32 @@
 <%include ../partials/header%>
 <%include ../partials/navigation%>
-  <h1>NEW POST</h1>
-  <form action="/posts" method="POST">
-    <div class="form-group">
-      <label for="title">Title:</label>
-      <input type="text" name="post[title]" id="title" class="form-control">
-    </div>
-    <!-- <div class="form-group">
-      <label for="date">Date:</label>
-      <input type="text" name="post[date]" id="date" class="form-control">
-    </div> -->
-    <div class="form-group">
-    <!-- add upload button -->
-      <label for="image">Image:</label>
-      <input type="hidden" name="post[image]" id="image" class="form-control" data-images-only="true" role="uploadcare-uploader" value="PICTURE">
-    </div>
-    <div class="form-group">
-      <label for="description">Description:</label>
-      <input type="text" name="post[description]" id="description" class="form-control">
-    </div>
-    <div class="form-group">
-      <!-- geo locate button -->
-      <label for="location">Location:</label>
-      <input type="text" name="post[loc]" id="location" class="form-control" disabled>
-    </div>
-    <input type="submit" value="ADD!" class="btn btn-success btn-block">
-  </form>
+  <h1 class="text-center">NEW POST</h1>
+  <div class="formWrapper">
+    <form action="/posts" method="POST">
+      <div class="form-group text-center">
+        <label class="labelFont" for="title">Title</label>
+        <input type="text" name="post[title]" id="title" class="form-control">
+      </div>
+      <!-- <div class="form-group text-center">
+        <label class="labelFont" for="date">Date:</label>
+        <input type="text" name="post[date]" id="date" class="form-control">
+      </div> -->
+      <div class="form-group text-center">
+      <!-- add upload button -->
+        <label class="labelFont" for="image">Image</label>
+        <input type="hidden" name="post[image]" id="image" class="form-control" data-images-only="true" role="uploadcare-uploader">
+      </div>
+      <div class="form-group text-center">
+        <label class="labelFont" for="description">Description</label>
+        <input type="text" name="post[description]" id="description" class="form-control">
+      </div>
+      <div class="form-group text-center">
+        <!-- geo locate button -->
+        <label class="labelFont" for="location">Location</label>
+        <input type="hidden" name="post[location]" id="location" class="form-control">
+      </div>
+      <input type="submit" value="ADD!" class="btn btn-primary btn-block">
+    </form>
+  </div>
   <script src="/script.js"></script>
-
 <%include ../partials/footer%>
