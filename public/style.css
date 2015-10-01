@@ -1,4 +1,4 @@
-label, h1, h2, h3, h4, h5, h6{
+div, label, h1, h2, h3, h4, h5, h6{
   font-family: "Palatino Linotype", "Book Antiqua", serif;
   font-color: white;
 }
@@ -21,4 +21,30 @@ label, h1, h2, h3, h4, h5, h6{
 body{
   background: url("https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQz7O4k7bxSdRrT6JRas3w4cEQ7mId4N3kjYjioKj2BWwKeTNQ2QQ")center center fixed;
   background-position: center;
+}
+
+.contentWrapper, .postsWrapper{
+  height: 300px;
+  margin: 10px;
+  background: #F0E68C;
+  border: 5px #00BFFF solid;
+  border-radius: 10px; 
+  padding: 15px;
+}
+
+.postsWrapper{
+  height: 340px; 
+}
+
+#homeBtn{
+  padding: 0px;
+  height: 34px;
+  width: 50px; 
+  margin-top: 1px;
+}
+
+#homeImg{
+ height: 32px;
+ width: 48px;
+ border-radius: 3px;
 }

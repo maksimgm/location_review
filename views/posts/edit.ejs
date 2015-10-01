@@ -1,10 +1,10 @@
 <%include ../partials/header%>
 <%include ../partials/navigation%>
-<div class="container">
-  <h1>EDIT POST</h1>
+<h1 class="text-center">EDIT POST</h1>
+<div class="container contentWrapper text-center">
   <form action="/posts/<%=post.id%>?_method=put" method="POST">
     <div class="form-group">
-      <label for="title">Title:</label>
+      <label class="labelFont" for="title">Title</label>
       <input type="text" name="post[title]" id="title" class="form-control">
     </div>
     <!-- <div class="form-group">
@@ -13,21 +13,17 @@
     </div> -->
     <div class="form-group">
     <!-- add upload button -->
-      <label for="image">Image:</label>
+      <label class="labelFont" for="image"></label>
       <input type="hidden" name="post[image]" id="image" class="form-control" data-images-only="true" role="uploadcare-uploader">
     </div>
     <div class="form-group">
-      <label for="description">Description:</label>
+      <label class="labelFont" for="description">Description</label>
       <input type="text" name="post[description]" id="description" class="form-control">
     </div>
-    <div class="form-group">
-      <!-- geo locate button -->
-      <label for="location">Location:</label>
+    <!-- <div class="form-group">
+      <label for="location">Location</label>
       <input type="button" name="post[location]" id="location" class="form-control">
-    </div>
-    <div>
-      <p></p>
-    </div>
+    </div> -->
     <input type="submit" value="Update" class="btn btn-success btn-block">
   </form>
 </div>

@@ -154,7 +154,7 @@ app.get("/posts", function(req,res){
             console.log('the session id is not found', req.session.id);
           } else {
             console.log("found user based on session id!!!", user);
-            res.render("posts/index",{posts: posts, currentUser: user.username});
+            res.render("posts/index",{posts: posts, currentUser: user});
             // console.log(user.username);
           }
         });
