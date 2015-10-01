@@ -1,17 +1,19 @@
 <%include ../partials/header%>
 <%include ../partials/navigation%>
-<div>
-  <a href="/">See All Posts</a>
+<h3 class="text-left"><a href="/">See All Posts</a></h3>
+  <h3 class="text-center">Comments</h3>
+  <%comments.forEach(function(comment){%>
+<div class="container commentsWrapper">
+<div class="col-xs-8 col-xs-offset-2">
+    <div> <span>By:</span> <%=comment.user.username%></div>
+    <div> <span>Content:</span> <%=comment.content%></div>
+    <div class="col-xs-10 col-xs-offset-1">
+      <a  class="pull-left btn btn-inline btn-info" href="/comments/<%=comment.id%>/edit">Edit</a>
+      <form action="/comments/<%=comment.id%>?_method=delete" method="POST">
+        <input class="pull-right btn btn-inline btn-info" type="submit" value="Delete">
+      </form>
+    </div>
+    </div>
 </div>
-<h1>Comments</h1>
-<%comments.forEach(function(comment){%>
-  <p><%=comment.user.username%></p>
-  <p><%=comment.content%></p>
-  <div>
-    <a href="/comments/<%=comment.id%>/edit">Edit</a>
-    <form action="/comments/<%=comment.id%>?_method=delete" method="POST">
-      <input type="submit" value="Delete">
-    </form>
-  </div>
 <%})%>
 <%include ../partials/footer%>

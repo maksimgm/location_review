@@ -20,6 +20,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 app.use(morgan('tiny'));
 app.use(loginMiddleware);
+app.locals.moment = require('moment');
 
 app.use(session({
   maxAge: 3600000,
@@ -154,7 +155,7 @@ app.get("/posts", function(req,res){
             console.log('the session id is not found', req.session.id);
           } else {
             console.log("found user based on session id!!!", user);
-            res.render("posts/index",{posts: posts, currentUser: user});
+            res.render("posts/index",{posts: posts.reverse(), currentUser: user});
             // console.log(user.username);
           }
         });
@@ -316,13 +317,7 @@ app.delete("/comments/:id",function(req,res){
 app.get("*",function(req,res){
   res.render("errors/404");
 });
-// client.geocodeForward('Chester, NJ', function(err, res) {
-   // 
-   //
-   //
-   //
-// });
-// listening to server
+
 app.listen(process.env.PORT || 3000, function(){
   console.log("Server is listening on port 3000");
 });

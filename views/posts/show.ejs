@@ -6,10 +6,11 @@
     <div> <img src="<%=post.image%>" alt="user's image"  width="195px" height="170px"></div>
     <div>Description:<%=post.description%></div>
     <div>Location:<%=post.location%></div>
-    <div>Date:<%=post.date%></div>
-  <a href="/posts/<%=post._id%>/comments" class="btn btn-info">See Comments</a>
-  <a href="/posts/<%=post._id%>/comments/new" class="btn btn-info">Add New Comment</a>
-  <div id="comments"></div>
+    <div>Date:<%=moment(post.date).format("MM/DD/YYYY")%></div>
+    <a href="/posts/<%=post._id%>/comments" class="btn btn-info">See Comments</a>
+    <a href="/posts/<%=post._id%>/comments/new" class="btn btn-info">Add New Comment</a>
+    <div id="comments"></div>
+    <div></div>
   </div>
 </div>
 

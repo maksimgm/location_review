@@ -1,9 +1,14 @@
 <%include ../partials/header%>
 <%include ../partials/navigation%>
 <h1>Add Comment</h1>
-<form action="/posts/<%= post.id %>/comments" method="POST">
-  <label for="comment"></label>
-  <textarea name="comment[content]" id="comment" cols="30" rows="10"></textarea>
-    <input type="submit">
-</form>
+<div class="container">
+  <form action="/posts/<%= post.id %>/comments" method="POST">
+    <div class="form-group">
+      <label for="comment"></label>
+      <textarea name="comment[content]" id="comment" class="form-control" cols="20" rows="10"></textarea>
+      <input type="submit" class="btn btn-block btn-primary" value="Submit Commment">
+    </div>
+  </form>
+</div>
+<script src="/script.js"></script>
 <%include ../partials/footer%>

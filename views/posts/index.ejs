@@ -5,8 +5,8 @@
 <%if(currentUser.username !== undefined || null){%>
   <h3>Welcome Back: <%=currentUser.username%></h3>
   <%}else{%>
-    <h3>Welcome Guest</h3>
-    <p>Post content by<a href="/signup"> signing up</a> </p>
+    <h4>Welcome Guest</h4>
+    <h3>Post content by<a href="/signup"> signing up</a> </h3>
   <%}%>
 </div>
 <h1 class="text-center">Location Review</h1>
@@ -18,19 +18,23 @@
     <%posts.forEach(function(post){%>
   <div class="col-xs-8 col-xs-offset-2 contentWrapper postsWrapper">
     <div class="col-xs-8 col-xs-offset-2 text-center">
+      <label>Title:</label>
       <a href="/posts/<%=post._id%>"><%=post.title%></a> 
     </div>  
     <div class="col-xs-8 col-xs-offset-2 text-center">
       <img src="<%=post.image%>" width="195px" height="170px">
     </div>
     <div class="col-xs-8 col-xs-offset-2 text-center">
+      <label>Description:</label>
       <%=post.description%>
     </div>
     <div class="col-xs-8 col-xs-offset-2 text-center">
+      <label>Location:</label>
       <%=post.location%>
     </div>
     <div class="col-xs-8 col-xs-offset-2 text-center">
-      <%=post.date%>
+      <label>Date:</label>
+      <%=moment(post.date).format("MM/DD/YYYY")%>
     </div>
     <%if(post.user.id === currentUser.id){%>
     <div class="col-xs-6">
