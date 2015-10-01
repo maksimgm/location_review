@@ -10,7 +10,7 @@ var postSchema = new mongoose.Schema({
   date: {type:String, default:new Date()},
   image: {type:String},
   description: {type:String, required:true},
-  location: {type:String},
+  loc: {type:String, required:true},
   user:{
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"

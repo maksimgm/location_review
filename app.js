@@ -15,6 +15,7 @@ var routeMiddleware = require("./middleware/routeHelper");
 
 app.set("view engine", "ejs");
 app.use(express.static(__dirname+"/public"));
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 app.use(morgan('tiny'));
@@ -85,10 +86,41 @@ app.get("/logout", function (req, res) {
   res.redirect("/");
 });
 
-// app.get("/location/:location", function (req, res) {
-//   req.logout();
-//   res.redirect("/");
-// });
+// THIS ROUTE IS SPECIFICALLY FOR AJAX REQUESTS
+// when a user posts to /location....
+app.post("/location", function (req, response) {
+  // REVERSE GEOCODE
+  // we use mapbox's reverse geocode method which takes in as its first parameter an object
+  // if you are jonesing for the source (https://github.com/mapbox/mapbox-sdk-js/blob/master/lib/services/geocoder.js line 99)
+  // the first parameter is an object with the keys longitude and latitude (THIS IS WHAT THE MAPBOX METHOD NEEDS!)
+  // the values we assign in this object come from req.body 
+    // req.body is populated through the data object which we sent in our AJAX request 
+    // we ran into a problem, where the .geocodeReverse method needed the lat and long to be NUMBERS
+      // problem was, the values in req.body always come in as a STRING - so to fix it, we called the Number function
+  client.geocodeReverse({longitude:Number(req.body.long),latitude:Number(req.body.lat)}, function(err, res) {    
+    // if anything goes wrong....log it here
+    console.log("ERRORS?", err);
+    // to see the response from the .geocodeReverse method we have this nice console.log
+    console.log("RESULT", res);
+
+    // we now NEED to tell our server how to respond and with what format
+    response.format({
+      // since we are making an AJAX call and are requesting JSON, we will respond with JSON as well
+    'application/json': function(){
+      // We are telling our express server to respond with an object with the key of location and value of whatever the address is
+      response.send(
+        {
+          location: res.features[0].place_name
+        }
+        );
+    },
+    'default': function() {
+      // If the request is ANYTHING except for JSON....log the request and respond with 406
+      response.status(406).send('Not Acceptable');
+    }
+    });
+  });
+});
 
 
 
@@ -137,7 +169,7 @@ app.get("/posts/new",routeMiddleware.ensureLoggedIn, function(req,res){
 });
 
 // create
-app.post("/posts", routeMiddleware.ensureLoggedIn, function(req,res){
+app.post("/posts", function(req,res){
   // db.Post.create(req.body.id,function(err,post){
   //   if(err){
   //     console.log(err);
@@ -148,6 +180,7 @@ app.post("/posts", routeMiddleware.ensureLoggedIn, function(req,res){
   // });
   var post = new db.Post(req.body.post);
   console.log("POST*****", post);
+  console.log("POST BODY",req.body.post);
   post.user = req.session.id;
   post.save();
   res.redirect("/posts");
