@@ -108,6 +108,7 @@ app.post("/location", function (req, response) {
     response.format({
       // since we are making an AJAX call and are requesting JSON, we will respond with JSON as well
     'application/json': function(){
+      console.log("request expects json!");
       // We are telling our express server to respond with an object with the key of location and value of whatever the address is
       response.send(
         {
@@ -116,6 +117,7 @@ app.post("/location", function (req, response) {
         );
     },
     'default': function() {
+      console.log("uh oh...");
       // If the request is ANYTHING except for JSON....log the request and respond with 406
       response.status(406).send('Not Acceptable');
     }
