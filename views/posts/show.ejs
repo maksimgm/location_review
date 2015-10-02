@@ -9,14 +9,16 @@
     <div>Date:<%=moment(post.date).format("MM/DD/YYYY")%></div>
     <!-- <a href="/posts/<%=post._id%>/comments" class="btn btn-info">See Comments</a> -->
     <div>
-    <%post.comments.forEach(function(comment){%>
-      <div>
+    <%post.comments.forEach(function(comment){%>  
+      <div class="col-xs-6 col-xs-offset-3 inlineComment">
         <%=comment.content%>
       </div>
     <%})%>
     </div>
-    <a href="/posts/<%=post._id%>/comments/new" class="btn btn-info">Add New Comment</a>
-    <div id="comments"></div>
+    <div class="col-xs-6 col-xs-offset-3">
+      <a href="/posts/<%=post._id%>/comments/new" class="btn btn-info">Add New Comment</a>
+      <div id="comments"></div>
+    </div>
     <div></div>
   </div>
 </div>
