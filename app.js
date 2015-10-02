@@ -148,7 +148,7 @@ app.get("/posts", function(req,res){
     }else{
       if (req.session.id===null) {
         console.log("no one is logged in!!!");
-        res.render("posts/index",{posts:posts,currentUser:""});
+        res.render("posts/index",{posts:posts.reverse(),currentUser:""});
       } else {
         db.User.findById(req.session.id,function(err,user){
           if (err) {
