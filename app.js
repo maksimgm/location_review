@@ -12,7 +12,6 @@ var session = require("cookie-session");
 var loginMiddleware = require("./middleware/loginHelper");
 var routeMiddleware = require("./middleware/routeHelper");
 
-
 app.set("view engine", "ejs");
 app.use(express.static(__dirname+"/public"));
 app.use(bodyParser.json());
