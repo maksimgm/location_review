@@ -8,7 +8,7 @@ Location Review is a full-stack application which allows users to rate a locatio
 ## Installation
 To install the app, do the following:
 
-	git clone git@github.com:maksimgm/				location_review.git
+	git clone git@github.com:maksimgm/	location_review.git
 	cd location_review
 	npm install
 ## Usage
