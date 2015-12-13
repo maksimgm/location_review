@@ -4,6 +4,7 @@ Location Review
 ## Summary
 Location Review is a full-stack application which allows users to rate a location, and receive comments about it from other users. Additionally, users are able to look into other reviews and comment on them.
 
+[**Heroku link**](https://location-review.herokuapp.com/login)
 ## Installation
 To install the app, do the following:
 
@@ -26,3 +27,4 @@ This app, uses the following technologies:
 * Mapbox API
 * Uploadcare API
 * Moment.js
+
