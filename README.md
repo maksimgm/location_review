@@ -1,14 +1,15 @@
 Location Review
 ===
 
+##[**Heroku link**](https://location-review.herokuapp.com/login)
+
 ## Summary
 Location Review is a full-stack application which allows users to rate a location, and receive comments about it from other users. Additionally, users are able to look into other reviews and comment on them.
 
-[**Heroku link**](https://location-review.herokuapp.com/login)
 ## Installation
 To install the app, do the following:
 
-	git clone git@github.com:maksimgm/	location_review.git
+	git clone git@github.com:maksimgm/location_review.git
 	cd location_review
 	npm install
 ## Usage
