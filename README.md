@@ -4,7 +4,7 @@ Location Review
 ##[**Heroku link**](https://location-review.herokuapp.com/login)
 
 ## Summary
-Location Review is a full-stack application which allows users to rate a location, and receive comments about it from other users. Additionally, users are able to look into other reviews and comment on them.
+Location Review is a full-stack application that enables users to review a location of any kind. i.e. national monument, park, gym, restaurant, etc. Additionally, users are able to look into other reviews and comment on them.
 
 ## Installation
 To install the app, do the following:
